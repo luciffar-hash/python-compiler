@@ -26,8 +26,26 @@ def execute_user_code(code, queue):
 st.set_page_config(layout="wide", page_title="Python 線上編譯器", page_icon="🐍")
 
 st.title("🇨🇳 Python 線上編譯器")
-# 💡 在這裡新增了版本號碼，方便追蹤與辨識
-st.caption("基於 Streamlit 構建的繁體中文學習平台 ｜ 🚀 目前版本：v2.0.0 (彩色穩定安全版)")
+# 💡 升級版本號至 v2.1.0
+st.caption("基於 Streamlit 構建的繁體中文學習平台 ｜ 🚀 目前版本：v2.1.0 (介面純淨版)")
+
+# 💡 透過強力 CSS 隱藏那顆討人厭的 Ace 內建 APPLY 按鈕
+st.markdown("""
+    <style>
+    iframe {
+        margin-bottom: -40px !important;
+    }
+    div[data-testid="stMarkdownContainer"] button, 
+    .ace_submit-btn, 
+    button:contains("APPLY") {
+        display: none !important;
+    }
+    /* 雙重保險：直接針對 ace 編輯器輸出的內部按鈕進行隱藏 */
+    [id^="ace-"] + button {
+        display: none !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 col1, col2 = st.columns([1, 1])
 
