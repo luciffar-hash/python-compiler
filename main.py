@@ -2,7 +2,7 @@ import streamlit as st
 import sys
 import io
 import multiprocessing
-# 💡 引入更穩定的專業彩色編輯器套件
+# 引入穩定的專業彩色編輯器套件
 from streamlit_ace import st_ace
 
 def execute_user_code(code, queue):
@@ -26,7 +26,7 @@ def execute_user_code(code, queue):
 st.set_page_config(layout="wide", page_title="Python 線上編譯器", page_icon="🐍")
 
 st.title("🇨🇳 Python 線上編譯器")
-st.caption("基於 Streamlit 構建的繁體中文學習平台")
+st.caption("基於 Streamlit 構建的繁體中文學習平台｜請點擊下方按鈕執行程式")
 
 col1, col2 = st.columns([1, 1])
 
@@ -38,7 +38,7 @@ print("哈囉，看到這行代表測試大成功！")
 print(1 + 1)
 '''
     
-    # 💡 使用 st_ace 元件，既有彩色，同步又穩定
+    # 使用 st_ace 元件，同步穩定且色彩漂亮
     user_code = st_ace(
         value=default_code,
         language="python",
@@ -49,6 +49,7 @@ print(1 + 1)
         key="python_editor"
     )
     
+    # 唯一核心執行鈕：統一使用滑鼠點擊執行，防呆又直覺
     run_btn = st.button("▶ 執行程式", type="primary", use_container_width=True)
 
 with col2:
