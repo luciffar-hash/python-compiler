@@ -26,26 +26,8 @@ def execute_user_code(code, queue):
 st.set_page_config(layout="wide", page_title="Python 線上編譯器", page_icon="🐍")
 
 st.title("🇨🇳 Python 線上編譯器")
-# 💡 升級版本號至 v2.1.0
-st.caption("基於 Streamlit 構建的繁體中文學習平台 ｜ 🚀 目前版本：v2.1.0 (介面純淨版)")
-
-# 💡 透過強力 CSS 隱藏那顆討人厭的 Ace 內建 APPLY 按鈕
-st.markdown("""
-    <style>
-    iframe {
-        margin-bottom: -40px !important;
-    }
-    div[data-testid="stMarkdownContainer"] button, 
-    .ace_submit-btn, 
-    button:contains("APPLY") {
-        display: none !important;
-    }
-    /* 雙重保險：直接針對 ace 編輯器輸出的內部按鈕進行隱藏 */
-    [id^="ace-"] + button {
-        display: none !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
+# 💡 升級版本號至 v2.2.0
+st.caption("基於 Streamlit 構建的繁體中文學習平台 ｜ 🚀 目前版本：v2.2.0 (無按鈕純淨版)")
 
 col1, col2 = st.columns([1, 1])
 
@@ -57,7 +39,8 @@ print("哈囉，看到這行代表測試大成功！")
 print(1 + 1)
 '''
     
-    # 使用 st_ace 元件，同步穩定且色彩漂亮
+    # 使用 st_ace 元件
+    # 💡 關鍵加入 auto_update=True，直接讓底層的 APPLY 紅色按鈕消失！
     user_code = st_ace(
         value=default_code,
         language="python",
@@ -65,6 +48,7 @@ print(1 + 1)
         font_size=16,
         tab_size=4,
         height=400,
+        auto_update=True,
         key="python_editor"
     )
     
