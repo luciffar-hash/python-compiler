@@ -2,6 +2,8 @@ import streamlit as st
 import sys
 import io
 import multiprocessing
+# 💡 引入更穩定的專業彩色編輯器套件
+from streamlit_ace import st_ace
 
 def execute_user_code(code, queue):
     old_stdout = sys.stdout
@@ -26,19 +28,6 @@ st.set_page_config(layout="wide", page_title="Python 線上編譯器", page_icon
 st.title("🇨🇳 Python 線上編譯器")
 st.caption("基於 Streamlit 構建的繁體中文學習平台")
 
-# 💡 透過 CSS 把原生的輸入框變得像專業黑客編輯器一樣帥氣
-st.markdown("""
-    <style>
-    textarea {
-        background-color: #1a1a1a !important;
-        color: #00ff66 !important;
-        font-family: 'Courier New', Courier, monospace !important;
-        font-size: 18px !important;
-        line-height: 1.5 !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
 col1, col2 = st.columns([1, 1])
 
 with col1:
@@ -49,12 +38,15 @@ print("哈囉，看到這行代表測試大成功！")
 print(1 + 1)
 '''
     
-    # 💡 換回官方最穩定的 text_area，絕不漏字
-    user_code = st.text_area(
-        "輸入 Python 程式碼：",
+    # 💡 使用 st_ace 元件，既有彩色，同步又穩定
+    user_code = st_ace(
         value=default_code,
+        language="python",
+        theme="monokai",
+        font_size=16,
+        tab_size=4,
         height=400,
-        label_visibility="collapsed"
+        key="python_editor"
     )
     
     run_btn = st.button("▶ 執行程式", type="primary", use_container_width=True)
@@ -69,7 +61,7 @@ with col2:
     )
 
 if run_btn:
-    # 點擊瞬間清空畫面
+    # 點擊瞬間清空畫面並閃黃燈
     output_placeholder.markdown(
         '<div style="background-color: #1e1e1e; color: #ffaa00; padding: 15px; font-family: monospace; min-height: 440px; border-radius: 5px; border: 1px solid #333;">⏳ 程式正在安全沙箱中執行，請稍候...</div>',
         unsafe_allow_html=True
