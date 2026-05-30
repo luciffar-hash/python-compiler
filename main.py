@@ -26,7 +26,8 @@ def execute_user_code(code, queue):
 st.set_page_config(layout="wide", page_title="Python 線上編譯器", page_icon="🐍")
 
 st.title("🇨🇳 Python 線上編譯器")
-st.caption("基於 Streamlit 構建的繁體中文學習平台")
+# 💡 在這裡新增了版本號碼，方便追蹤與辨識
+st.caption("基於 Streamlit 構建的繁體中文學習平台 ｜ 🚀 目前版本：v2.0.0 (彩色穩定安全版)")
 
 col1, col2 = st.columns([1, 1])
 
@@ -38,7 +39,7 @@ print("哈囉，看到這行代表測試大成功！")
 print(1 + 1)
 '''
     
-    # 使用 st_ace 元件，純粹點擊按鈕執行
+    # 使用 st_ace 元件，同步穩定且色彩漂亮
     user_code = st_ace(
         value=default_code,
         language="python",
