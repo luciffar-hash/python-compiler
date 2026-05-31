@@ -22,14 +22,14 @@ def execute_user_code(code, queue):
         
     queue.put((stdout_result, error_msg))
 
-# 網頁基本設定
-st.set_page_config(layout="wide", page_title="Python 線上編譯器", page_icon="🐍")
+# 網頁基本設定（💡 這裡的 page_title 會直接變成 Google 搜尋看到的藍色大標題，SEO 關鍵字埋好埋滿）
+st.set_page_config(layout="wide", page_title="路西法智庫創世神手：Python 線上編譯器", page_icon="🐍")
 
-# 網頁標題與版本號碼
-st.title("🇨🇳 Python 線上編譯器")
-st.caption("基於 Streamlit 構建的繁體中文學習平台 ｜ 🚀 目前版本：v2.2.1 (法律防護純淨版)")
+# 網頁主標題與品牌系列化
+st.title("🐍 路西法智庫創世神手：Python 線上編譯器")
+st.caption("基於 Streamlit 構建的繁體中文學習平台 ｜ 🚀 目前版本：v2.3.0 (品牌一體版)")
 
-# 💡 新增免責聲明：在法律上建立「明確告知與風險自擔」的防線
+# 免責聲明（法律防彈背心）
 st.warning("⚠️ 免責聲明：本平台僅供教學與學術交流使用。使用者於本平台執行之所有程式碼衍生之風險與損害，均由使用者自行承擔，本平台及開發者概不負任何法律與損害賠償責任。")
 
 col1, col2 = st.columns([1, 1])
@@ -42,8 +42,7 @@ print("哈囉，看到這行代表測試大成功！")
 print(1 + 1)
 '''
     
-    # 使用 st_ace 元件
-    # 透過 auto_update=True 參數，直接讓底層的 APPLY 紅色按鈕自動隱藏消失
+    # 使用 st_ace 元件，自動同步且隱藏原廠 APPLY 按鈕
     user_code = st_ace(
         value=default_code,
         language="python",
