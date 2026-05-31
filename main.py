@@ -25,9 +25,12 @@ def execute_user_code(code, queue):
 # 網頁基本設定
 st.set_page_config(layout="wide", page_title="Python 線上編譯器", page_icon="🐍")
 
+# 網頁標題與版本號碼
 st.title("🇨🇳 Python 線上編譯器")
-# 💡 升級版本號至 v2.2.0
-st.caption("基於 Streamlit 構建的繁體中文學習平台 ｜ 🚀 目前版本：v2.2.0 (無按鈕純淨版)")
+st.caption("基於 Streamlit 構建的繁體中文學習平台 ｜ 🚀 目前版本：v2.2.1 (法律防護純淨版)")
+
+# 💡 新增免責聲明：在法律上建立「明確告知與風險自擔」的防線
+st.warning("⚠️ 免責聲明：本平台僅供教學與學術交流使用。使用者於本平台執行之所有程式碼衍生之風險與損害，均由使用者自行承擔，本平台及開發者概不負任何法律與損害賠償責任。")
 
 col1, col2 = st.columns([1, 1])
 
@@ -40,7 +43,7 @@ print(1 + 1)
 '''
     
     # 使用 st_ace 元件
-    # 💡 關鍵加入 auto_update=True，直接讓底層的 APPLY 紅色按鈕消失！
+    # 透過 auto_update=True 參數，直接讓底層的 APPLY 紅色按鈕自動隱藏消失
     user_code = st_ace(
         value=default_code,
         language="python",
@@ -65,12 +68,13 @@ with col2:
     )
 
 if run_btn:
-    # 點擊瞬間清空畫面並閃黃燈
+    # 點擊瞬間清空舊畫面，並閃爍黃色讀取燈
     output_placeholder.markdown(
         '<div style="background-color: #1e1e1e; color: #ffaa00; padding: 15px; font-family: monospace; min-height: 440px; border-radius: 5px; border: 1px solid #333;">⏳ 程式正在安全沙箱中執行，請稍候...</div>',
         unsafe_allow_html=True
     )
 
+    # 惡意程式碼過濾（安全防護第一關）
     forbidden_words = ["os.system", "subprocess", "rmdir", "remove", "shutil"]
     if any(word in user_code for word in forbidden_words):
         output_placeholder.markdown(
@@ -78,6 +82,7 @@ if run_btn:
             unsafe_allow_html=True
         )
     else:
+        # 多進程沙箱與 3 秒超時限制（安全防護第二關）
         queue = multiprocessing.Queue()
         p = multiprocessing.Process(target=execute_user_code, args=(user_code, queue))
         p.start()
@@ -94,6 +99,7 @@ if run_btn:
             if not final_output.strip():
                 final_output = "（程式執行完畢，無任何輸出結果）"
 
+        # 輸出結果渲染
         output_placeholder.markdown(
             f'<div style="background-color: #1e1e1e; color: #ffffff; padding: 15px; font-family: monospace; min-height: 440px; border-radius: 5px; border: 1px solid #333; white-space: pre-wrap;">{final_output}</div>',
             unsafe_allow_html=True
